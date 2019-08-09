@@ -10,7 +10,7 @@
             style="color:#158eff; fontSize: 16px; fontFamily: serif; textAlign: center; lineHeight: 110px; cursor:pointer;"
           >+ 新建项目</div>
         </div>
-        <div v-for="(item,index) in indexdata">
+        <div :key="index" v-for="(item,index) in indexdata">
           <div class="car_cs">
             <h3 class="car_title_top_cs">Title</h3>
             <h2 class="car_title_cs">{{item.title}}</h2>

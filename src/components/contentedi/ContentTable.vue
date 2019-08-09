@@ -46,42 +46,83 @@
         </div>
       </div>
     </div>
-
-    <div class="contenttable_img_docker">
-      <div style="flex-direction: row; margin-left: 10px;">
-        <div class="contenttable_img">
-          <a-button>黏贴截图</a-button>
-          <a-upload
-            name="file"
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            :headers="headers"
-            @change="handleChange"
-          >
-            <a-button>上传图片</a-button>
-          </a-upload>
+    <div style="display:flex;flex-wrap: wrap;">
+      <Img />
+      <Description />
+      <Permissions />
+      <Event />
+      <Fields />
+      <Hardware />
+      <Rely />
+      <Supplement />
+      <Acceptance />
+      <a-dropdown style="flex-direction: row;" :trigger="['click']">
+        <div class="contenttable_add_content_cs">
+          <a-icon class="font_ico_cs" type="plus" />
         </div>
-        <div class="contenttable_img_title">
-          <h3 class="contenttable_font">Lorem ipsu</h3>
-        </div>
-      </div>
+        <a-menu slot="overlay">
+          <a-menu-item v-for="(addstates,index) in addstate" :key="index">
+            <div @click="AddState(index)">{{addstates.title}}</div>
+          </a-menu-item>
+        </a-menu>
+      </a-dropdown>
     </div>
   </div>
 </template>
 <script>
 import { open } from "fs";
+import Img from "./template/img";
+import Description from "./template/description";
+import Permissions from "./template/permissions";
+import Event from "./template/event";
+import Fields from "./template/fields";
+import Hardware from "./template/hardware";
+import Rely from "./template/rely";
+import Supplement from "./template/supplement";
+import Acceptance from "./template/acceptance";
 export default {
+  components: {
+    Img,
+    Description,
+    Permissions,
+    Event,
+    Fields,
+    Hardware,
+    Rely,
+    Supplement,
+    Acceptance
+  },
   data() {
     return {
       addsrc: [
-        { title: "蓝湖", icon: "up-circle", wintitle: "请输入蓝湖链接" },
-        { title: "axhub", icon: "login", wintitle: "请输入axhub链接" },
+        {
+          title: "蓝湖",
+          icon: "up-circle",
+          wintitle: "请输入蓝湖链接"
+        },
+        {
+          title: "axhub",
+          icon: "login",
+          wintitle: "请输入axhub链接"
+        },
         {
           title: "processon",
           icon: "plus-circle",
           wintitle: "请输入processon链接"
         }
       ],
-      opensrc: []
+      opensrc: [],
+      addstate: [
+        { title: "添加图片组" },
+        { title: "基本介绍" },
+        { title: "权限说明" },
+        { title: "状态机制" },
+        { title: "字段/输入" },
+        { title: "硬件/网络" },
+        { title: "服务说明" },
+        { title: "其他说明" },
+        { title: "验收标准" }
+      ]
     };
   },
   methods: {
@@ -151,33 +192,35 @@ export default {
         },
         class: "test"
       });
+    },
+    AddState(index) {
+      console.log(index);
     }
   }
 };
 </script>
 <style>
-.contenttable_img {
-  width: 200px;
-  height: 200px;
-  border: 1px solid #000;
+.contenttable_add_content_cs {
+  width: 260px;
+  height: 50px;
+  border-radius: 3px;
+  margin-top: 10px;
+  margin-left: 10px;
+  background-color: #fff;
+  box-shadow: 2px 2px 8px rgba(86, 86, 86, 0.1);
 }
-.contenttable_font {
-  font-size: 16px;
-  font-family: serif;
-  font-weight: 300;
+.font_ico_cs {
+  width: 260px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 56px;
+}
+.font_ico_cs:hover {
+  color: #2990ff;
+  cursor: pointer;
+}
 
-  color: #000;
-}
-.contenttable_img_title {
-  width: 200px;
-  height: 30px;
-  margin-top: -1px;
-  border: 1px solid #000;
-}
-.contenttable_img_docker {
-  display: flex;
-  margin-top: 16px;
-}
 .contenttable_add_src {
   text-align: left;
   font-size: 18px;
@@ -202,6 +245,7 @@ export default {
   cursor: pointer;
   flex-direction: row;
 }
+
 .add_input_src {
   width: 280px;
 }
